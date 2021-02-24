@@ -1,8 +1,8 @@
 # ***pyRSA - University project***
 
 As the title says, this is a university project for an exam I gave.
-It is not an efficient program in terms of complexity analysis (in fact it needs some adjustments),
-but they will arrive these months.
+It is not an efficient program in terms of complexity (in fact it needs some adjustments),
+but they will done through these months.
 
 This python program consists in a RSA algorithm simulator. The functionalities of this program are:
 
