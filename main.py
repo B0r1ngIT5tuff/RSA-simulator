@@ -31,13 +31,18 @@ def write_to_JSON(n,c,d):
 
     f_name = input("What's the name of the file? ")
 
-    # It creates the crypted_messages folder
-    os.mkdir("crypted_messages")
-
-    # I open 'filename.json' in write mode and I write in it 'data'.
-    with open(os.path.realpath(f"crypted_messages/{f_name}" + ".json"),"w") as f:
-        json.dump(data,f, indent= 4, sort_keys=True)
+    # It creates the crypted_messages folder if not already present
+    crypted = os.listdir(os.path.curdir)
+    if "crypted_messages" not in crypted:
         
+        os.mkdir("crypted_messages")
+
+        # I open 'filename.json' in write mode and I write in it 'data'.
+        with open(os.path.realpath(f"crypted_messages/{f_name}" + ".json"),"w") as f:
+            json.dump(data,f, indent= 4, sort_keys=True)
+    else:
+        with open(os.path.realpath(f"crypted_messages/{f_name}" + ".json"),"w") as f:
+            json.dump(data,f, indent= 4, sort_keys=True)
     
 
 def read_from_JSON():
@@ -83,7 +88,7 @@ def read_from_JSON():
             # I open the selected JSON file in read mode, the content of the file is inerpreted as a 'dict' with the 'object_hook' parameter. 
             with open(os.path.realpath(f"crypted_messages/{file}"), "r") as f:
                 values = json.load(f, object_hook=dict)
-                c = values["Messaggio"]
+                c = values["Message"]
                 n = values["Pub key"]
                 d = values["Priv key"]
 

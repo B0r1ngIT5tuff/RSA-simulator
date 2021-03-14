@@ -1,35 +1,6 @@
 from random import randint
 from math import gcd, sqrt, factorial
-
-def isprime(num):
-    '''
-        This function implements a primality test inspired from the AKS primality test,
-        by the way, this implementation is inefficent (it has time complexity of O(2^n)).
-        It will be fixed in the next months ;-).
-
-        Parameters:
-        - num, is an integer.
-
-        isprime(num) -> (bool)
-    '''
-
-    coef = []    # The 'coef' list stores the coefficients of num.
-
-    # With this loop I calculate all the binomial coefficents of num (num is the power).
-    for i in range(num+1):   
-        coef.append(factorial(num)//(factorial(i)*factorial(num-i)))
-
-    # I exclude the the first and last coefficent by subtracting 1 to both. 
-    coef[0] -= 1
-    coef[num] -= 1 
-
-    j = num
-    # I divide num for all the coefficients, if the remainder of all divisions is zero, num is a prime number.
-    while j > -1 and coef[j] % num == 0:
-        j = j - 1
-
-    return True if j < 0 else False
-
+from sympy.ntheory import isprime
 
 def pub_keygen():
     ''' 
@@ -45,8 +16,8 @@ def pub_keygen():
     # I verify if 'p' and 'q' are prime numbers with the isprime() function, if they're not they will be re-generated randomly.
     loop = True
     while loop == True:
-        p = randint(1,1000)
-        q = randint(1,1000)
+        p = randint(1,1000000000)
+        q = randint(1,1000000000)
 
         if isprime(p) == True and isprime(q) == True:
             loop = False
@@ -109,7 +80,7 @@ def encrypt_m(m, e, n):
 
     # Every number in mex_int will be added in the list: 'c' which contains the crypted characters of the message.
     for i in range(len(mex_int)):
-        c.append(mex_int[i]**e % n)
+        c.append(pow(mex_int[i],e,n))
 
     return c
 
@@ -130,7 +101,7 @@ def decrypt_m(c, d, n):
     m = []
     print("I'm decrypting the message, this might take some time.\n")
     for i in c: 
-        mex.append((i**d) % n)
+        mex.append(pow(i,d,n))
 
     for j in mex:
         m.append(chr(j))
